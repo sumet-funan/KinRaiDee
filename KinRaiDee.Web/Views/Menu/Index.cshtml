@@ -1,0 +1,110 @@
+﻿@model IEnumerable<KinRaiDee.Web.Models.Menu>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Find your menu</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Meat)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <div class="accordion" id="accordionMenu">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </button>
+                                </h2>
+                            </div>
+
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionMenu">
+                                <div class="card-body">
+                                    @foreach (var cooking in item.Cookings)
+                                    {
+                                        <div class="accordion" id="accordionCookings_@cooking.Id">
+                                            <div class="card">
+                                                <div class="card-header" id="headingOne">
+                                                    <h2 class="mb-0">
+                                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseCooking_@cooking.Id" aria-expanded="true" aria-controls="collapseCooking_@cooking.Id">
+                                                            @Html.DisplayFor(modelItem => cooking.Name)
+                                                        </button>
+                                                    </h2>
+                                                </div>
+
+                                                <div id="collapseCooking_@cooking.Id" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionCookings_@cooking.Id">
+                                                    <div class="card-body">
+                                                        <div class="accordion" id="accordionCookingDetail_@cooking.Id">
+                                                            <div class="card">
+                                                                <div class="card-header" id="headingOne">
+                                                                    <h2 class="mb-0">
+                                                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseRawMaterial_@cooking.Id" aria-expanded="true" aria-controls="collapseRawMaterial_@cooking.Id">
+                                                                            Raw Material
+                                                                        </button>
+                                                                    </h2>
+                                                                </div>
+
+                                                                <div id="collapseRawMaterial_@cooking.Id" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionCookingDetail_@cooking.Id">
+                                                                    <div class="card-body">
+                                                                        @foreach (var material in cooking.RawMaterial)
+                                                                        {
+                                                                            @material.Name; @material.Volumn; @material.Unit;
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card">
+                                                                <div class="card-header" id="headingTwo">
+                                                                    <h2 class="mb-0">
+                                                                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseCookingMethod_@cooking.Id" aria-expanded="false" aria-controls="collapseCookingMethod_@cooking.Id">
+                                                                            Cooking Method
+                                                                        </button>
+                                                                    </h2>
+                                                                </div>
+                                                                <div id="collapseCookingMethod_@cooking.Id" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionCookingDetail_@cooking.Id">
+                                                                    <div class="card-body">
+                                                                        @foreach (var cMethod in cooking.CookingMethod)
+                                                                        {
+                                                                            @cMethod.Name; @cMethod.Desciption;
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Meat)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
